@@ -40,60 +40,65 @@ public class O extends Block implements Tiles {
         int dir = GamePlayController.getxDir();
 
         Block[] temp = new Block[4];
-        if (dir >= 0) {
-            if (tile[1].getPositionX() / 10 + 1 >= 10) {
-                succesfu = false;
-                temp = tile;
+        if (tile[1].getPositionY() != 230) {
+            if (dir >= 0) {
+                if (tile[1].getPositionX() / 10 + 1 >= 10) {
+                    succesfu = false;
+                    temp = tile;
+                }
+            } else {
+                if (tile[0].getPositionX() / 10 - 1 <= -1) {
+                    succesfu = false;
+                    temp = tile;
+                }
             }
-        } else {
-            if (tile[0].getPositionX() / 10 - 1 <= -1) {
-                succesfu = false;
-                temp = tile;
-            }
-        }
-        if (tile[0].getPositionY() != 230 && succesfu) {
-            for (Block b : tile) {
-                GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 0);
-            }
-        }
-        if (succesfu) {
-
-
-            int x = tile[0].getPositionX() + getSizes() * dir;
-            int y = tile[0].getPositionY();
-
-            System.out.println("/////////////");
-            System.out.println(tile[0].getPositionX());
-            System.out.println(x);
-            System.out.println("/////////////");
-
-
-            temp[0] = new Block(x, y, COLOR, getSizes());
-            temp[1] = new Block(tile[0].getPositionX(), y, COLOR, getSizes());
-            temp[2] = new Block(x, y - getSizes(), COLOR, getSizes());
-            temp[3] = new Block(tile[0].getPositionX(), y - getSizes(), COLOR, getSizes());
-
-            if (!succesfu || (!(checkIfCanMove(temp[0].getPositionY() / 10, tile[0].getPositionX() / 10 + GamePlayController.getxDir())) ||
-                    !(checkIfCanMove(temp[1].getPositionY() / 10, tile[1].getPositionX() / 10 + GamePlayController.getxDir()))
-                    || !(checkIfCanMove((temp[2].getPositionY()) / 10, tile[2].getPositionX() / 10 + GamePlayController.getxDir()) ||
-                    !(checkIfCanMove((temp[2].getPositionY()) / 10, tile[3].getPositionX() / 10 + GamePlayController.getxDir()))))) {
-                succesfu = false;
-                temp = tile;
-
-            }
-
-            if (!succesfu) {
+            if (tile[0].getPositionY() != 230 && succesfu) {
                 for (Block b : tile) {
                     GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 0);
                 }
-            } else {
-                for (Block b : temp) {
-                    GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 2);
-                }
             }
-            set(temp);
-            GamePlayController.setxDir(0);
+            if (succesfu) {
 
+
+                int x = tile[0].getPositionX() + getSizes() * dir;
+                int y = tile[0].getPositionY();
+
+                System.out.println("/////////////");
+                System.out.println(tile[0].getPositionX());
+                System.out.println(x);
+                System.out.println("/////////////");
+
+
+                temp[0] = new Block(x, y, COLOR, getSizes());
+                temp[1] = new Block(tile[0].getPositionX(), y, COLOR, getSizes());
+                temp[2] = new Block(x, y - getSizes(), COLOR, getSizes());
+                temp[3] = new Block(tile[0].getPositionX(), y - getSizes(), COLOR, getSizes());
+
+                if (!succesfu || (!(checkIfCanMove(temp[0].getPositionY() / 10, tile[0].getPositionX() / 10 + GamePlayController.getxDir())) ||
+                        !(checkIfCanMove(temp[1].getPositionY() / 10, tile[1].getPositionX() / 10 + GamePlayController.getxDir()))
+                        || !(checkIfCanMove((temp[2].getPositionY()) / 10, tile[2].getPositionX() / 10 + GamePlayController.getxDir()) ||
+                        !(checkIfCanMove((temp[2].getPositionY()) / 10, tile[3].getPositionX() / 10 + GamePlayController.getxDir()))))) {
+                    succesfu = false;
+                    temp = tile;
+
+                }
+
+                if (!succesfu) {
+                    for (Block b : tile) {
+                        GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 0);
+                    }
+                } else {
+                    for (Block b : temp) {
+                        GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 2);
+                    }
+                }
+                set(temp);
+                GamePlayController.setxDir(0);
+
+            } else {
+                GamePlayController.setxDir(0);
+                set(tile);
+            }
         } else {
             GamePlayController.setxDir(0);
             set(tile);

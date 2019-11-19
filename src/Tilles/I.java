@@ -37,75 +37,78 @@ public class I extends Block implements Tiles {
         int dir = GamePlayController.getxDir();
 
         Block[] temp = new Block[4];
-        if (dir >= 0) {
-            if (tile[3].getPositionX() / 10 + 1 == 10) {
-                succesfu = false;
-                temp = tile;
-            }
-        } else {
-            if (tile[0].getPositionX() / 10 - 1 == -1) {
-                temp = tile;
-                succesfu = false;
-            }
-        }
-        if (tile[0].getPositionY() != 230 && succesfu) {
-            for (Block b : tile) {
-                GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 0);
-            }
-        }
-        if (succesfu) {
-            if (isHorizontal()) {
-
-
-                int x = tile[0].getPositionX() + getSizes() * dir;
-                int y = tile[0].getPositionY();
-
-                for (int i = 0; i < 4; i++) {
-
-                    temp[i] = new Block(x + getSizes() * i, y, COLOR, getSizes());
-                    if (!succesfu || !(checkIfCanMove(y / 10, (x + getSizes() * i) / 10))) {
-                        succesfu = false;
-                        temp = tile;
-                        break;
-                    }
-
-                }
-
-            }
-            //When vertical
-            else {
-                int x = tile[0].getPositionX() + getSizes() * dir;
-                for (int i = 0; i < 4; i++) {
-
-
-                    temp[i] = new Block(x, tile[i].getPositionY(), COLOR, getSizes());
-                    if (!succesfu || !checkIfCanMove(temp[i].getPositionY() / 10, x / 10)) {
-                        temp = tile;
-                        succesfu = false;
-                        break;
-                    }
-                }
-
-            }
-
-            if (!succesfu) {
-                for (Block b : temp) {
-                    GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 0);
+        if (tile[0].getPositionY() != 230) {
+            if (dir >= 0) {
+                if (tile[3].getPositionX() / 10 + 1 == 10) {
+                    succesfu = false;
+                    temp = tile;
                 }
             } else {
-                for (Block b : temp) {
-                    GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 1);
+                if (tile[0].getPositionX() / 10 - 1 == -1) {
+                    temp = tile;
+                    succesfu = false;
                 }
             }
-            set(temp);
-            GamePlayController.setxDir(0);
+            if (tile[0].getPositionY() != 230 && succesfu) {
+                for (Block b : tile) {
+                    GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 0);
+                }
+            }
+            if (succesfu) {
+                if (isHorizontal()) {
 
+
+                    int x = tile[0].getPositionX() + getSizes() * dir;
+                    int y = tile[0].getPositionY();
+
+                    for (int i = 0; i < 4; i++) {
+
+                        temp[i] = new Block(x + getSizes() * i, y, COLOR, getSizes());
+                        if (!succesfu || !(checkIfCanMove(y / 10, (x + getSizes() * i) / 10))) {
+                            succesfu = false;
+                            temp = tile;
+                            break;
+                        }
+
+                    }
+
+                }
+                //When vertical
+                else {
+                    int x = tile[0].getPositionX() + getSizes() * dir;
+                    for (int i = 0; i < 4; i++) {
+
+
+                        temp[i] = new Block(x, tile[i].getPositionY(), COLOR, getSizes());
+                        if (!succesfu || !checkIfCanMove(temp[i].getPositionY() / 10, x / 10)) {
+                            temp = tile;
+                            succesfu = false;
+                            break;
+                        }
+                    }
+
+                }
+
+                if (!succesfu) {
+                    for (Block b : temp) {
+                        GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 0);
+                    }
+                } else {
+                    for (Block b : temp) {
+                        GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 1);
+                    }
+                }
+                set(temp);
+                GamePlayController.setxDir(0);
+
+            } else {
+                GamePlayController.setxDir(0);
+                set(tile);
+            }
         } else {
             GamePlayController.setxDir(0);
             set(tile);
         }
-
-
     }
 
     @Override
@@ -214,7 +217,7 @@ public class I extends Block implements Tiles {
             int x = tile[2].getPositionX();
             temp[0] = new Block(x, y - getSizes() * 2, COLOR, getSizes());
             temp[1] = new Block(x, y - getSizes() * 1, COLOR, getSizes());
-            temp[2] = new Block(x, y -  getSizes() * 0, COLOR, getSizes());
+            temp[2] = new Block(x, y - getSizes() * 0, COLOR, getSizes());
             temp[3] = new Block(x, y - getSizes() * (-1), COLOR, getSizes());
             if (temp[0].getPositionY() / 10 == -1 || checkIfCanMove(temp[0].getPositionY() / 10, temp[2].getPositionX() / 10)) {
                 succesful = true;

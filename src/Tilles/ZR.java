@@ -105,88 +105,92 @@ public class ZR extends Block implements Tiles {
         int dir = GamePlayController.getxDir();
 
         Block[] temp = new Block[4];
-        if (dir >= 0) {
-            if (isHorizontal()) {
-                if (tile[3].getPositionX() / 10 + 1 == 10) {
-                    succesfu = false;
-                    temp = tile;
-                }
-            } else {
-                if (tile[0].getPositionX() / 10 + 1 == 10) {
-                    succesfu = false;
-                    temp = tile;
-                }
-            }
-        } else {
-            if (isHorizontal()) {
-                if (tile[0].getPositionX() / 10 - 1 == -1) {
-                    temp = tile;
-                    succesfu = false;
-                }
-            } else {
-                if (tile[3].getPositionX() / 10 - 1 == -1) {
-                    temp = tile;
-                    succesfu = false;
-                }
-            }
-        }
-        if (tile[0].getPositionY() != 230 && succesfu) {
-            for (Block b : tile) {
-                GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 0);
-            }
-        }
-        if (succesfu) {
-            if (isHorizontal()) {
-
-
-                int x = tile[0].getPositionX() + getSizes() * dir;
-                int y = tile[0].getPositionY();
-
-                for (int i = 0; i < 4; i++) {
-
-                    temp[i] = new Block(tile[i].getPositionX() + getSizes() * dir, tile[i].getPositionY(), COLOR, getSizes());
-                    if (!succesfu || !(checkIfCanMove(temp[i].getPositionY() / 10, (temp[i]).getPositionX() / 10))) {
+        if (tile[0].getPositionY() != 230) {
+            if (dir >= 0) {
+                if (isHorizontal()) {
+                    if (tile[3].getPositionX() / 10 + 1 == 10) {
                         succesfu = false;
                         temp = tile;
-                        break;
                     }
-
+                } else {
+                    if (tile[0].getPositionX() / 10 + 1 == 10) {
+                        succesfu = false;
+                        temp = tile;
+                    }
                 }
-
-            }
-            //When vertical
-            else {
-                int x = tile[0].getPositionX() + getSizes() * dir;
-                for (int i = 0; i < 4; i++) {
-
-
-                    temp[i] = new Block(tile[i].getPositionX() + getSizes() * dir, tile[i].getPositionY(), COLOR, getSizes());
-                    if (!succesfu || !checkIfCanMove(temp[i].getPositionY() / 10, x / 10)) {
+            } else {
+                if (isHorizontal()) {
+                    if (tile[0].getPositionX() / 10 - 1 == -1) {
                         temp = tile;
                         succesfu = false;
-                        break;
+                    }
+                } else {
+                    if (tile[3].getPositionX() / 10 - 1 == -1) {
+                        temp = tile;
+                        succesfu = false;
                     }
                 }
-
             }
-
-            if (!succesfu) {
-                for (Block b : temp) {
+            if (tile[0].getPositionY() != 230 && succesfu) {
+                for (Block b : tile) {
                     GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 0);
                 }
-            } else {
-                for (Block b : temp) {
-                    GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 3);
-                }
             }
-            set(temp);
-            GamePlayController.setxDir(0);
+            if (succesfu) {
+                if (isHorizontal()) {
 
+
+                    int x = tile[0].getPositionX() + getSizes() * dir;
+                    int y = tile[0].getPositionY();
+
+                    for (int i = 0; i < 4; i++) {
+
+                        temp[i] = new Block(tile[i].getPositionX() + getSizes() * dir, tile[i].getPositionY(), COLOR, getSizes());
+                        if (!succesfu || !(checkIfCanMove(temp[i].getPositionY() / 10, (temp[i]).getPositionX() / 10))) {
+                            succesfu = false;
+                            temp = tile;
+                            break;
+                        }
+
+                    }
+
+                }
+                //When vertical
+                else {
+                    int x = tile[0].getPositionX() + getSizes() * dir;
+                    for (int i = 0; i < 4; i++) {
+
+
+                        temp[i] = new Block(tile[i].getPositionX() + getSizes() * dir, tile[i].getPositionY(), COLOR, getSizes());
+                        if (!succesfu || !checkIfCanMove(temp[i].getPositionY() / 10, x / 10)) {
+                            temp = tile;
+                            succesfu = false;
+                            break;
+                        }
+                    }
+
+                }
+
+                if (!succesfu) {
+                    for (Block b : temp) {
+                        GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 0);
+                    }
+                } else {
+                    for (Block b : temp) {
+                        GamePlayController.setPlayingBoard(b.getPositionY() / 10, b.getPositionX() / 10, 3);
+                    }
+                }
+                set(temp);
+                GamePlayController.setxDir(0);
+
+            } else {
+                GamePlayController.setxDir(0);
+                set(tile);
+            }
         } else {
             GamePlayController.setxDir(0);
             set(tile);
         }
-
 
     }
 

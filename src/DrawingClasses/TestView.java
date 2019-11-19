@@ -17,9 +17,9 @@ public class TestView extends JPanel {
     private int xOffset = 200;
     private int yOffset = Block.size * 20;
     private int scale = 3;
-    private int speed = 100;
+    private int speed = 150;
     private final Color[] colors = {Color.CYAN, Color.CYAN, Color.YELLOW, Color.RED,
-            Color.ORANGE, Color.MAGENTA, Color.BLUE, Color.GREEN};
+            Color.GREEN, Color.BLUE, Color.ORANGE, Color.MAGENTA};
 
     public static void main(String[] args) {
         TestView t = new TestView();
@@ -60,8 +60,7 @@ public class TestView extends JPanel {
 
         if (tile == null) {
             Random rand = new Random();
-            int random = rand.nextInt(4);
-            System.out.println(random);
+            int random = rand.nextInt(8);
             tile = GamePlayController.generateRandomTille(random);
         }
 
@@ -72,10 +71,8 @@ public class TestView extends JPanel {
 
         if (tile.get() == null || tile.get()[0].getPositionY() <= 0) {
             GamePlayController.printBoard();
-//            System.out.println("gere");
             Random rand = new Random();
-            int random = rand.nextInt(4);
-            System.out.println(random);
+            int random = rand.nextInt(8);
             tile = GamePlayController.generateRandomTille(random);
             GamePlayController.shiftBoard();
             repaint();
@@ -83,8 +80,6 @@ public class TestView extends JPanel {
             //Moves the given tile either down or sideways
             GamePlayController.move(tile);
             paintGame(g);
-//            paintTile(scaleTiles(i.getI()), g2d);
-
         }
     }
 
@@ -118,25 +113,12 @@ public class TestView extends JPanel {
 
         for (int i = 0; i < 23; i++) {
             for (int j = 0; j < 10; j++) {
-                if (GamePlayController.getPlayingBoard()[i][j] == 1) {
+                if (GamePlayController.getPlayingBoard()[i][j] != 0) {
                     g.setColor(colors[GamePlayController.getPlayingBoard()[i][j]]);
                     g.fillRect(scale * j * 10, i * 10 * scale, Block.size * scale, Block.size * scale);
                     g.setColor(Color.GRAY);
                     g.drawRect(scale * j * 10, i * 10 * scale, Block.size * scale, Block.size * scale);
                 }
-                if (GamePlayController.getPlayingBoard()[i][j] == 2) {
-                    g.setColor(colors[GamePlayController.getPlayingBoard()[i][j]]);
-                    g.fillRect(scale * j * 10, i * 10 * scale, Block.size * scale, Block.size * scale);
-                    g.setColor(Color.GRAY);
-                    g.drawRect(scale * j * 10, i * 10 * scale, Block.size * scale, Block.size * scale);
-                }
-                if (GamePlayController.getPlayingBoard()[i][j] == 3) {
-                    g.setColor(colors[GamePlayController.getPlayingBoard()[i][j]]);
-                    g.fillRect(scale * j * 10, i * 10 * scale, Block.size * scale, Block.size * scale);
-                    g.setColor(Color.GRAY);
-                    g.drawRect(scale * j * 10, i * 10 * scale, Block.size * scale, Block.size * scale);
-                }
-
             }
         }
         repaint();

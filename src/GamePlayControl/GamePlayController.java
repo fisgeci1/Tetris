@@ -87,7 +87,7 @@ public class GamePlayController {
         for (int i = 0; i < tempArray.size(); i++) {
             newBoard[i] = tempArray.get(i);
         }
-        
+
         if (tempArray.size() - 1 < 23) {
             int elemntsToAdd = 23 - tempArray.size();
             for (int i = 23 - elemntsToAdd; i < 23; i++) {
@@ -126,6 +126,18 @@ public class GamePlayController {
                 break;
             case 3:
                 tile = new ZR(50, Block.size * 23);
+                break;
+            case 4:
+                tile = new ZL(50, Block.size * 23);
+                break;
+            case 5:
+                tile = new LR(50, Block.size * 22);
+                break;
+            case 6:
+                tile = new LL(50, Block.size * 22);
+                break;
+            case 7:
+                tile = new T(50, Block.size * 22);
                 break;
             default:
                 tile = new I(50, Block.size * 23);
